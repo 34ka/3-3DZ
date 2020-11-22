@@ -7,18 +7,20 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class DeposStrah {
+public class DepositsStrahTests {
 
     @BeforeAll
-    static void setup() { Configuration.startMaximized = true; }
+    static void setup() {
+        Configuration.startMaximized = true;
+    }
 
     @Test
-    void successfulurl(){
-
+    void checkButtonDepositsStrahFourPractics() {
         open("http://alfabank.ru");
         $(byText("Вклады")).shouldHave(text("Вклады"));
 
         $(byText("Вклады")).click();
+
         //click parent
         $$(byText("Страхование вкладов")).find(visible).parent().click();
         //assert
@@ -28,6 +30,7 @@ public class DeposStrah {
         $("[data-test-id=tabs-list-tabTitle-0]").sibling(0).click();
         //assert
         $(byText("Альфа-Банк является участником системы обязательного страхования вкладов")).shouldBe(visible);
+        sleep(500);
 
         //click preceding
         $("[data-test-id=tabs-list-tabTitle-2]").preceding(0).click();
@@ -35,10 +38,8 @@ public class DeposStrah {
         $(byText("Альфа-Банк является участником системы обязательного страхования вкладов")).shouldBe(visible);
 
         //click closest
-        //
-        // Почему этот closest не работает?
-        //
-        //$(".aw_H28R.Jw_H28R.kw_H28R.f3jS9CT").closest(".b3jS9CT").click();
-        //$(byText("Альфа-Банк является участником системы обязательного страхования вкладов")).shouldBe(visible);
+        $(byText("Страхование вкладов")).closest("button").click();
+        //assert
+        $(byText("Альфа-Банк является участником системы обязательного страхования вкладов")).shouldBe(visible);
     }
 }
